@@ -10,21 +10,6 @@
 #define INITIAL_SIZE (256)
 #define MAX_CHAIN_LENGTH (8)
 
-/* We need to keep keys and values */
-typedef struct _hashmap_element{
-	char* key;
-	int in_use;
-	any_t data;
-} hashmap_element;
-
-/* A hashmap has some maximum size and current size,
- * as well as the data to hold. */
-typedef struct _hashmap_map{
-	int table_size;
-	int size;
-	hashmap_element *data;
-} hashmap_map;
-
 /*
  * Return an empty hashmap, or NULL on failure.
  */
@@ -150,7 +135,7 @@ unsigned long crc32(const unsigned char *s, unsigned int len)
 {
   unsigned int i;
   unsigned long crc32val;
-  
+
   crc32val = 0;
   for (i = 0;  i < len;  i ++)
     {
@@ -244,7 +229,7 @@ int hashmap_rehash(map_t in){
 
         if (curr[i].in_use == 0)
             continue;
-            
+
 		status = hashmap_put(m, curr[i].key, curr[i].data);
 		if (status != MAP_OK)
 			return status;
@@ -278,7 +263,7 @@ int hashmap_put(map_t in, char* key, any_t value){
 	m->data[index].data = value;
 	m->data[index].key = key;
 	m->data[index].in_use = 1;
-	m->size++; 
+	m->size++;
 
 	return MAP_OK;
 }
@@ -330,7 +315,7 @@ int hashmap_iterate(map_t in, PFany f, any_t item) {
 
 	/* On empty hashmap, return immediately */
 	if (hashmap_length(m) <= 0)
-		return MAP_MISSING;	
+		return MAP_MISSING;
 
 	/* Linear probing */
 	for(i = 0; i< m->table_size; i++)

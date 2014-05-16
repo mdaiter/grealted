@@ -6,8 +6,8 @@
  * Modified by Pete Warden to fix a serious performance problem, support strings as keys
  * and removed thread synchronization - http://petewarden.typepad.com
  */
-#ifndef __HASHMAP_H__
-#define __HASHMAP_H__
+#ifndef HASHMAP_H
+#define HASHMAP_H
 
 #define MAP_MISSING -3  /* No such element */
 #define MAP_FULL -2 	/* Hashmap is full */
@@ -19,6 +19,21 @@
  * the hashmap.
  */
 typedef void *any_t;
+
+/* We need to keep keys and values */
+typedef struct _hashmap_element{
+	char* key;
+	int in_use;
+	any_t data;
+} hashmap_element;
+
+/* A hashmap has some maximum size and current size,
+ * as well as the data to hold. */
+typedef struct _hashmap_map{
+	int table_size;
+	int size;
+	hashmap_element *data;
+} hashmap_map;
 
 /*
  * PFany is a pointer to a function that can take two any_t arguments
@@ -78,4 +93,4 @@ extern void hashmap_free(map_t in);
  */
 extern int hashmap_length(map_t in);
 
-#endif __HASHMAP_H__
+#endif

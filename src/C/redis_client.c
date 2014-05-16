@@ -16,3 +16,11 @@ int redis_client_get_edge_size(redisContext* c, char* name_of_graph){
     freeReplyObject(reply);
     return repl;
 }
+
+void redis_client_set_node_size(redisContext* c, char* name_of_graph, int size){
+    redisCommand(c, "SET %s:nodes:size %d", name_of_graph, size);
+}
+
+void redis_client_set_edge_size(redisContext* c, char* name_of_graph, int size){
+    redisCommand(c, "SET %s:edges:size %d", name_of_graph, size);
+}

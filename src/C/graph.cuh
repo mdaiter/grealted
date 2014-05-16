@@ -17,6 +17,12 @@ typedef struct graph_t {
 
 void graph_init(graph_t*, char*);
 
+graph_t* graph_load(char*);
 
+void graph_add_node(graph_t*, node_t*);
+
+void graph_add_edge(graph_t*, edge_t*);
+
+__global__ void graph_find(node_t*, char*, void*, node_t*);
 
 #endif

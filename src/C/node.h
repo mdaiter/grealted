@@ -11,7 +11,7 @@ typedef struct node_t {
     kvec_t(int) edges;
 } node_t;
 
-void node_init(node_t*, int);
+node_t* node_init(int);
 
 void node_add_attr(node_t*, char*, any_t);
 
@@ -25,8 +25,8 @@ void node_remove_edge(node_t*, int);
 
 void node_destroy(node_t*);
 
-void node_load(node_t*, redisContext*);
+void node_load(node_t*, redisContext*, char*);
 
-void node_save(node_t*, redisContext*);
+void node_save(node_t*, redisContext*, char*);
 
 #endif
