@@ -6,11 +6,12 @@ edge_t* edge_init(int _id, int _n_start, int _n_end){
     e->id = _id;
     e->n_start = _n_start;
     e->n_end = _n_end;
+    e->attr = ht_create(16);
     return e;
 }
 
-void edge_add_attr(edge_t* e, char* key, any_t val){
-    hashmap_put(e->attr, key, val);
+void edge_add_attr(edge_t* e, char* key, char* val){
+    ht_set(e->attr, key, val);
 }
 
 void edge_remove_attr(edge_t* e, char* key){

@@ -8,6 +8,7 @@
 #define kvec_t(type) struct { size_t n, m; type *a; }
 #define kv_init(v) ((v).n = (v).m = 0, (v).a = 0)
 #define kv_destroy(v) free((v).a)
+#define kv_array(v) ((v).a)
 #define kv_A(v, i) ((v).a[(i)])
 #define kv_pop(v) ((v).a[--(v).n])
 #define kv_size(v) ((v).n)
