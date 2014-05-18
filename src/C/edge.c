@@ -15,7 +15,7 @@ void edge_add_attr(edge_t* e, char* key, char* val){
 }
 
 void edge_remove_attr(edge_t* e, char* key){
-    hashmap_remove(e->attr, key);
+    //hashmap_remove(e->attr, key);
 }
 
 void edge_load(edge_t* edge, redisContext* context, char* name){

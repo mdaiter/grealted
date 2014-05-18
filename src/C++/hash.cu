@@ -4,7 +4,7 @@
 #include <limits.h>
 #include <cuda.h>
 #include "hash.cuh"
-
+/*
 __device__ __host__ int strlen(char* s){
 	int c = 0;
 	while(*(s+c)){
@@ -37,7 +37,7 @@ __device__ __host__ int strcmp(char* str1, char* str2){
 	}
 	return 0;
 }
-
+*/
 
 /* Create a new hashtable. */
 hashtable_t *ht_create( int size ) {
@@ -59,25 +59,26 @@ hashtable_t *ht_create( int size ) {
 	}
 
 	hashtable->size = size;
+	hashtable->entry_size = 0;
 
 	return hashtable;	
 }
 
 /* Hash a string for a particular hash table. */
-__device__ __host__ int ht_hash( hashtable_t *hashtable, char *key ) {
+/*__device__ __host__ int ht_hash( hashtable_t *hashtable, char *key ) {
 
 	unsigned long int hashval;
 	int i = 0;
 
 	/* Convert our string to an integer */
-	while( hashval < ULONG_MAX && i < strlen( key ) ) {
+	/*while( hashval < ULONG_MAX && i < strlen( key ) ) {
 		hashval = hashval << 8;
 		hashval += key[ i ];
 		i++;
 	}
 
 	return hashval % hashtable->size;
-}
+}*/
 
 /* Create a key-value pair. */
 entry_t *ht_newpair( char *key, char *value ) {
@@ -138,24 +139,25 @@ void ht_set( hashtable_t *hashtable, char *key, char *value ) {
 			newpair->next = next;
 			last->next = newpair;
 		}
+		hashtable->entry_size++;
 	}
 }
 
 /* Retrieve a key-value pair from a hash table. */
-__device__ __host__ char *ht_get( hashtable_t *hashtable, char *key ) {
+/*__device__ __host__ char *ht_get( hashtable_t *hashtable, char *key ) {
 	int bin = 0;
 	entry_t *pair;
 
 	bin = ht_hash( hashtable, key );
 
 	/* Step through the bin, looking for our value. */
-	pair = hashtable->table[ bin ];
+	/*pair = hashtable->table[ bin ];
 	while( pair != NULL && pair->key != NULL && strcmp( key, pair->key ) > 0 ) {
 		pair = pair->next;
 	}
 
 	/* Did we actually find anything? */
-	if( pair == NULL || pair->key == NULL || strcmp( key, pair->key ) != 0 ) {
+	/*if( pair == NULL || pair->key == NULL || strcmp( key, pair->key ) != 0 ) {
 		return NULL;
 
 	} else {
@@ -163,21 +165,4 @@ __device__ __host__ char *ht_get( hashtable_t *hashtable, char *key ) {
 	}
 	
 }
-
-
-int main( int argc, char **argv ) {
-
-	hashtable_t *hashtable = ht_create( 1 );
-
-	ht_set( hashtable, "key1", "inky" );
-	ht_set( hashtable, "key2", "pinky" );
-	ht_set( hashtable, "key3", "blinky" );
-	ht_set( hashtable, "key4", "floyd" );
-
-	printf( "%s\n", ht_get( hashtable, "key1" ) );
-	printf( "%s\n", ht_get( hashtable, "key2" ) );
-	printf( "%s\n", ht_get( hashtable, "key3" ) );
-	printf( "%s\n", ht_get( hashtable, "key4" ) );
-	printf( "%d\n", hashtable->size);
-	return 0;
-}
+*/

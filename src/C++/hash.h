@@ -1,9 +1,6 @@
 #ifndef hash_gpu_h
 #define hash_gpu_h
 
-#ifdef __cplusplus
-extern "C"{
-#endif
 struct entry_s{
 	char* key;
 	char* value;
@@ -15,7 +12,6 @@ typedef struct entry_s entry_t;
 struct hashtable_s {
 	int size;
 	entry_t **table;
-	int entry_size;
 };
 
 typedef struct hashtable_s hashtable_t;
@@ -27,9 +23,5 @@ void ht_set(hashtable_t*, char*, char*);
 char* ht_get( hashtable_t*, char* );
 
 int ht_hash( hashtable_t*,  char* );
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

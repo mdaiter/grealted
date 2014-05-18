@@ -35,4 +35,6 @@ void graph_add_edge(graph_t*, edge_t*);
 
 __global__ void graph_find(node_t*, char*, void*, node_t*);
 
+node_vector_t* graph_find_V(graph_t*, char*, char*);
+
 #endif

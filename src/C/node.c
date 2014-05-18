@@ -8,13 +8,18 @@
 node_t* node_init(int _id){
     node_t* node = (node_t*) malloc(sizeof(node_t));
     node->id = _id;
-    node->attr = ht_create();
+    node->attr = ht_create(16);
+    ht_set(node->attr, "", "");
     kv_init(node->edges);
     return node;
 }
 
 void node_add_attr(node_t* node, char* key, char* val){
     ht_set(node->attr, key, val);
+}
+
+char* node_get_attr(node_t* node, char* key){
+    return ht_get(node->attr, key);
 }
 
 void node_remove_attr(node_t* node, char* key){
@@ -36,7 +41,7 @@ void node_remove_edge(node_t* node, int edgeNum){
 void node_destroy(node_t* node){
     //remove interior stuff first
     kv_destroy(node->edges);
-    hashmap_free(node->attr);
+    free(node->attr);
 
     free(node);
 }
@@ -70,9 +75,9 @@ void node_save(node_t* node, redisContext* context, char* name){
     redisReply* reply;
     int i = 0;
     //Deal with maps first; get to vector later
-    for (; i < node->attr->size; i++){
+    for (; i < node->attr->entry_size; i++){
         //Check if string or number
-        char* temp_string = node->attr->table[i].value;
+        char* temp_string = node->attr->table[i]->value;
         char* p = temp_string;
         //This is defined in errno.h. Basically, you're modifing it in an isolated enviornment to see changes
         errno = 0;

@@ -7,13 +7,15 @@
 
 typedef struct node_t {
     int id;
-    hashtable_t attr;
+    hashtable_t* attr;
     kvec_t(int) edges;
 } node_t;
 
 node_t* node_init(int);
 
 void node_add_attr(node_t*, char*, char*);
+
+char* node_get_attr(node_t*, char*);
 
 void node_remove_attr(node_t*, char*);
 
