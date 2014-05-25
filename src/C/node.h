@@ -4,11 +4,12 @@
 #include "../C++/hash.cuh"
 #include "kvec.h"
 #include "../../hiredis/hiredis.h"
-
+#include<stdbool.h>
 typedef struct node_t {
     int id;
     hashtable_t* attr;
     kvec_t(int) edges;
+    bool is_selected;
 } node_t;
 
 node_t* node_init(int);

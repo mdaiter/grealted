@@ -14,12 +14,15 @@ int main(){
     node_add_attr(new_node2, "name", "Lisa");
     node_add_attr(new_node3, "name", "Eric");
     graph_add_node(graph, new_node);
+    graph_add_node(graph, new_node2);
+    graph_add_node(graph, new_node3);
     edge_t* new_edge = edge_init_gpu(1, 0, 1);
     graph_add_edge(graph, new_edge);
-    node_vector_t* vector = graph_find_V(graph, "name", "Matt");
-    for(int i = 0; i < vector->size; i++){
-	char* temp_name = node_get_attr(vector->stuff[i], "name");
-	printf("%d is the id of %s\n", vector->stuff[i]->id, temp_name);
+    
+    graph_find_V(graph, "name", "Matt");
+    for(int i = 0; i < graph->nodes->size; i++){
+	char* temp_name = node_get_attr(graph->nodes->stuff[i], "name");
+	printf("%d is the id of %s\n", graph->nodes->stuff[i]->id, temp_name);
     }
     return 0;
 }

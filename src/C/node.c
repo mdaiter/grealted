@@ -8,9 +8,10 @@
 node_t* node_init(int _id){
     node_t* node = (node_t*) malloc(sizeof(node_t));
     node->id = _id;
-    node->attr = ht_create(16);
+    node->attr = ht_create(1);
     ht_set(node->attr, "", "");
     kv_init(node->edges);
+    node->is_selected = true;
     return node;
 }
 
